@@ -20,64 +20,64 @@ y = y';
 evalPoints = [x; y];
 recordedDistance = calcDist(evalPoints);
 
-%Make population
-for i = 1:popCount
-    population(:,i) = evalPoints(:,i);
-end
-population = shuffleFunc(population,100);
-
-%Calculate distance and make it the fitness value
-for i = 1:length(population)
-    d = calcDist(population);
-    if (d < recordedDistanced)
-        recordedDistance = d;
-        bestEver = population(:,i);
-    end
-    fitness = d;
-end
-
-
-
-
-
-
-
-
-% 
-% 
-% 
-% figure
-% %Plot points
-% for k = 1:length(N)
-%     for l = 1:2
-%         plot(evalPoints(1,:),evalPoints(2,:),'-x');
-%         hold on
-%     end
+% %Make population
+% for i = 1:popCount
+%     population(:,i) = evalPoints(:,i);
 % end
-% axis([0 10 0 10]);
+% population = shuffleFunc(population,100);
 % 
-% %Randomly check which candidate solution is the best
-% for i = 1:100
-%     
-%     num1 = randi(length(x),1,1);
-%     num2 = randi(length(x),1,1);
-%     
-%     evalPoints = swap(evalPoints,num1,num2);
-%     d = calcDist(evalPoints);
-%     %Plot points only if better d is found
-%     if(d < recordedDistance)
-%         clf;
+% %Calculate distance and make it the fitness value
+% for i = 1:length(population)
+%     d = calcDist(population);
+%     if (d < recordedDistanced)
 %         recordedDistance = d;
-%         for k = 1:length(N)
-%             for l = 1:2
-%                 plot(evalPoints(1,:),evalPoints(2,:),'-x k');
-%                 hold on
-%             end
-%         end
-%     axis([0 11 0 11]);
+%         bestEver = population(:,i);
 %     end
-%     pause(0.01);
+%     fitness = d;
 % end
 % 
 % 
 % 
+
+
+
+
+
+
+
+
+figure
+%Plot points
+for k = 1:length(N)
+    for l = 1:2
+        plot(evalPoints(1,:),evalPoints(2,:),'-x');
+        hold on
+    end
+end
+axis([0 10 0 10]);
+
+optimizedNumTimes = 0;
+%Randomly check which candidate solution is the best
+for i = 1:10000
+    
+    evalPoints = shuffleFunc(evalPoints,100);
+    d = calcDist(evalPoints);
+    %Plot points only if better d is found
+    if(d < recordedDistance)
+        clf;
+        recordedDistance = d
+        for k = 1:length(N)
+            for l = 1:2
+                plot(evalPoints(1,:),evalPoints(2,:),'-x k');
+                hold on
+            end
+        end
+    axis([0 11 0 11]);
+    bestEver = evalPoints
+    optimizedNumTimes = optimizedNumTimes+1;
+    end
+    pause(0.001);
+end
+
+
+

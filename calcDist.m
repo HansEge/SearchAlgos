@@ -1,4 +1,4 @@
-function calcDist = dist(x) 
+function calcDist = calcDist(x) 
     %Calculate distance between all points
     evalPoints = x;
     offset = 0;
