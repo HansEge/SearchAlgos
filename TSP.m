@@ -2,8 +2,8 @@ close all;
 clear;
 
 
-popCount = 10;
-N = 10; %Number of cities
+popCount = 20;
+N = 5; %Number of cities
 fitness = 0;
 
 
@@ -20,12 +20,23 @@ y = y';
 evalPoints = [x; y];
 recordedDistance = calcDist(evalPoints);
 
-% %Make population
-% for i = 1:popCount
-%     population(:,i) = evalPoints(:,i);
-% end
-% population = shuffleFunc(population,100);
+
 % 
+% %Make population
+% population = evalPoints;
+% for i = 1:popCount-1
+%     population = [population; evalPoints];
+%     population = shuffleFunc(population,100);
+% end
+% 
+% 
+% 
+% %Calculate fitness
+% for i = 1:length(population)
+%     d = calcDist(population)
+% end
+
+
 % %Calculate distance and make it the fitness value
 % for i = 1:length(population)
 %     d = calcDist(population);
@@ -36,10 +47,6 @@ recordedDistance = calcDist(evalPoints);
 %     fitness = d;
 % end
 % 
-% 
-% 
-
-
 
 
 
@@ -58,7 +65,7 @@ axis([0 10 0 10]);
 
 optimizedNumTimes = 0;
 %Randomly check which candidate solution is the best
-for i = 1:10000
+for i = 1:20000
     
     evalPoints = shuffleFunc(evalPoints,100);
     d = calcDist(evalPoints);
