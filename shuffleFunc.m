@@ -1,13 +1,19 @@
 function shuffle = shuffleFunc(x,num)
-    for i = 1:num
-        
-        columnSize = size(x);
-        columnSize = columnSize(2);
-        
-        indexA = randi(columnSize,1,1);
-        indexB = randi(columnSize,1,1);
-        
-        x = swap(x,indexA,indexB);
+    
+    columnSize = size(x);
+    columnSize = columnSize(2);
+    offset = 0;
+    
+    for k = 1:columnSize
+        for i = 1:num
+            rowEvalPoints = x(k+offset:k+1+offset,:);
+
+            indexA = randi(columnSize,1,1);
+            indexB = randi(columnSize,1,1);
+
+            x(k+offset:k+1+offset,:) = swap(rowEvalPoints,indexA,indexB);
+        end
+            offset = offset+1;
     end
-        shuffle = x;
+    shuffle = x;
 end

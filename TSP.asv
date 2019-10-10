@@ -3,9 +3,9 @@ clear;
 
 
 popCount = 10;
-N = 20; %Number of cities
+N = 10; %Number of cities
 fitness = 0;
-
+recordDistance = inf();
 
 
 %Create random cities(points)
@@ -18,7 +18,7 @@ y = y';
 
 %Calculate initial distance between all points 
 evalPoints = [x; y];
-recordedDistance = calcDist(evalPoints);
+%recordedDistance = calcDist(evalPoints);
 
 
 
@@ -30,12 +30,41 @@ end
 population = shuffleFunc(population,100);
 
 
-
 %Calculate fitness
-for i = 
+for i = 1:length(population)
+    d = calcDist(population);
+    
+    if(i < 10)
+        fitness(i) = 1/d(i);
+    end
+    if(min(d) < recordDistance)
+        recordDistance = min(d);
+        bestEverIndex = find(d == min(d));
+        
+        bestEverPop = population((bestEverIndex*2)-1:bestEverIndex*2,:);
+    end
+end
+
+%Make next generation
+for i = 1:length(population)
+    
+    index = 0;
+    r = 1.*rand(1,1);
+    
+    while(r > 0)
+        r = r - fitness(index);
+        index = index + 1;
+    end
+    index = index - 1;
+    crossoverA = fitness(index)
+    crossoverB = fitness(index)
+    
+end
 
 
 
+
+% 
 % %Calculate distance and make it the fitness value
 % for i = 1:length(population)
 %     d = calcDist(population);
@@ -45,15 +74,11 @@ for i =
 %     end
 %     fitness = d;
 % end
-% 
 
 
 
 
 
-% 
-% 
-% 
 % 
 % 
 % figure
@@ -68,7 +93,7 @@ for i =
 % 
 % optimizedNumTimes = 0;
 % %Randomly check which candidate solution is the best
-% for i = 1:20000
+% for i = 1:10000
 %     
 %     evalPoints = shuffleFunc(evalPoints,100);
 %     d = calcDist(evalPoints);
@@ -88,6 +113,6 @@ for i =
 %     end
 %     pause(0.001);
 % end
-% 
+
 
 
