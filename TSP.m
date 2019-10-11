@@ -41,9 +41,11 @@ for i = 1:length(population)
         recordDistance = min(d);
         bestEverIndex = find(d == min(d));
         
-        bestEverPop = population((bestEverIndex*2)-1:bestEverIndex*2,:);
+        
     end
 end
+
+bestEverPop = population((bestEverIndex*2)-1:bestEverIndex*2,:);
 
 %normalize fitness
 sum = 0;
@@ -55,20 +57,10 @@ for i = 1:length(fitness)
 end
 
 %Make next generation
-for i = 1:length(population)
-    
-    index = 1;
-    r = 1.*rand(1,1);
-    
-    while(r > 0)
-        r = r - fitness(index);
-        index = index + 1;
-    end
-    index = index - 1;
-    crossoverA = fitness(index);
-    crossoverB = fitness(index);
-    
-end
+
+crossoverA = crossoverFunc(fitness);
+crossoverB = crossoverFunc(fitness);
+
 
 
 
