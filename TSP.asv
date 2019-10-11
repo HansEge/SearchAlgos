@@ -59,15 +59,11 @@ end
 %Make next generation
 
 %Pick two best of population
-Parents = pickTopTwo(fitness,population);
+Parents
 
-crossoverPointA = round(N*(1/3));
-crossoverPointB = round(N*(2/3));
+crossoverA = crossoverFunc(fitness);
+crossoverB = crossoverFunc(fitness);
 
-% crossoverA = crossoverFunc(fitness);
-% crossoverB = crossoverFunc(fitness);
-
-%
 
 
 
