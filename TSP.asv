@@ -34,7 +34,7 @@ population = shuffleFunc(population,100);
 for i = 1:length(population)
     d = calcDist(population);
     
-    if(i < 11)
+    if(i < 10)
         fitness(i) = 1/d(i);
     end
     if(min(d) < recordDistance)
@@ -45,19 +45,10 @@ for i = 1:length(population)
     end
 end
 
-%normalize fitness
-sum = 0;
-for i = 1:length(fitness)
-    sum = sum + fitness(i);
-end
-for i = 1:length(fitness)
-    fitness(i) = fitness(i)/sum;
-end
-
 %Make next generation
 for i = 1:length(population)
     
-    index = 1;
+    index = 0;
     r = 1.*rand(1,1);
     
     while(r > 0)
@@ -65,8 +56,8 @@ for i = 1:length(population)
         index = index + 1;
     end
     index = index - 1;
-    crossoverA = fitness(index);
-    crossoverB = fitness(index);
+    crossoverA = fitness(index)
+    crossoverB = fitness(index)
     
 end
 
@@ -74,27 +65,14 @@ end
 
 
 % 
-% optimizedNumTimes = 0;
-% %Randomly check which candidate solution is the best
-% for i = 1:10000
-%     
-%     evalPoints = shuffleFunc(evalPoints,100);
-%     d = calcDist(evalPoints);
-%     %Plot points only if better d is found
-%     if(d < recordedDistance)
-%         clf;
-%         recordedDistance = d
-%         for k = 1:length(N)
-%             for l = 1:2
-%                 plot(evalPoints(1,:),evalPoints(2,:),'-x k');
-%                 hold on
-%             end
-%         end
-%     axis([0 11 0 11]);
-%     bestEver = evalPoints
-%     optimizedNumTimes = optimizedNumTimes+1;
+% %Calculate distance and make it the fitness value
+% for i = 1:length(population)
+%     d = calcDist(population);
+%     if (d < recordedDistanced)
+%         recordedDistance = d;
+%         bestEver = population(:,i);
 %     end
-%     pause(0.001);
+%     fitness = d;
 % end
 
 
