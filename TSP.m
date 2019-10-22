@@ -3,7 +3,7 @@ clear;
 
 
 popCount = 10;
-N = 10; %Number of cities
+N = 9; %Number of cities
 fitness = 0;
 recordDistance = inf();
 
@@ -30,110 +30,122 @@ end
 population = shuffleFunc(population,100);
 
 
-%Calculate fitness
-for i = 1:length(population)
-    d = calcDist(population);
-    
-    if(i < 11)
-        fitness(i) = 1/d(i);
-    end
-    if(min(d) < recordDistance)
-        recordDistance = min(d);
-        bestEverIndex = find(d == min(d));
-        
-        
-    end
-end
 
-bestEverPop = population((bestEverIndex*2)-1:bestEverIndex*2,:);
 
-%normalize fitness
-sum = 0;
-for i = 1:length(fitness)
-    sum = sum + fitness(i);
-end
-for i = 1:length(fitness)
-    fitness(i) = fitness(i)/sum;
-end
+% bestEverPop = population((bestEverIndex*2)-1:bestEverIndex*2,:);
+% 
+% %normalize fitness
+% sum = 0;
+% for i = 1:length(fitness)
+%     sum = sum + fitness(i);
+% end
+% for i = 1:length(fitness)
+%     fitness(i) = fitness(i)/sum;
+% end
 
 %Make next generation
 
 %Pick two best of population
-Parents = pickTopTwo(fitness,population);
+parents = pickTopTwo(fitness,population);
 
-crossoverPointA = round(N*(1/3));
-crossoverPointB = round(N*(2/3));
+% crossoverPointA = round(N*(1/3));
+% crossoverPointB = round(N*(2/3));
 
 % crossoverA = crossoverFunc(fitness);
 % crossoverB = crossoverFunc(fitness);
 
-%
-
-
-
 
 % 
-% optimizedNumTimes = 0;
-% %Randomly check which candidate solution is the best
-% for i = 1:10000
-%     
-%     evalPoints = shuffleFunc(evalPoints,100);
-%     d = calcDist(evalPoints);
-%     %Plot points only if better d is found
-%     if(d < recordedDistance)
-%         clf;
-%         recordedDistance = d
-%         for k = 1:length(N)
-%             for l = 1:2
-%                 plot(evalPoints(1,:),evalPoints(2,:),'-x k');
-%                 hold on
-%             end
-%         end
-%     axis([0 11 0 11]);
-%     bestEver = evalPoints
-%     optimizedNumTimes = optimizedNumTimes+1;
-%     end
-%     pause(0.001);
+% 
+% %Sweet lovin'
+% tempParentA = parents(1:2,1:crossoverPointA-1);
+% nextGen = tempParentA;
+% tempParentB = parents(3:4,crossoverPointA:crossoverPointB-1);
+% nextGen = [nextGen tempParentB];
+% tempParentA = parents(1:2,crossoverPointB:end);
+% nextGen = [nextGen tempParentA];
+% 
+% chanceOfMut = randi(100,1,1);
+% 
+% if(chanceOfMut < 100)
+%     nextGen = swap(nextGen,randi(length(nextGen),1,1),randi(length(nextGen),1,1));
 % end
-
-
-
-
-
 % 
+% population = nextGen;
 % 
-% figure
-% %Plot points
-% for k = 1:length(N)
-%     for l = 1:2
-%         plot(evalPoints(1,:),evalPoints(2,:),'-x');
-%         hold on
+% %Mutate
+% for i = 1:popCount-1
+%     chanceOfMut = randi(100,1,1);
+% 
+%     if(chanceOfMut < 100)
+%         nextGen = swap(nextGen,randi(length(nextGen),1,1),randi(length(nextGen),1,1));
 %     end
+%     population = [population; nextGen];
 % end
-% axis([0 10 0 10]);
 % 
-% optimizedNumTimes = 0;
-% %Randomly check which candidate solution is the best
-% for i = 1:10000
-%     
-%     evalPoints = shuffleFunc(evalPoints,100);
-%     d = calcDist(evalPoints);
-%     %Plot points only if better d is found
-%     if(d < recordedDistance)
-%         clf;
-%         recordedDistance = d
-%         for k = 1:length(N)
-%             for l = 1:2
-%                 plot(evalPoints(1,:),evalPoints(2,:),'-x k');
-%                 hold on
-%             end
-%         end
-%     axis([0 11 0 11]);
-%     bestEver = evalPoints
-%     optimizedNumTimes = optimizedNumTimes+1;
-%     end
-%     pause(0.001);
-% end
+% 
 
+
+%Test of genetic algorithm
+numberOfGenerations = 0;
+for g = 1:1000
+    
+    %Calculate fitness
+    for i = 1:length(population)
+        d = calcDist(population);
+
+        if(i < N)
+            fitness(i) = 1/d(i);
+        end
+        if(min(d) < recordDistance)
+            recordDistance = min(d)
+            bestEverIndex = find(d == min(d));
+            bestEverPop = population((bestEverIndex*2)-1:bestEverIndex*2,:);
+            
+            clf;
+            plot(bestEverPop(1,:),bestEverPop(2,:),'-x k');
+            axis([0 11 0 11]);
+            hold on
+            numberOfGenerations
+        end
+    end
+    
+
+
+    %normalize fitness
+    sum = 0;
+    for i = 1:length(fitness)
+        sum = sum + fitness(i);
+    end
+    for i = 1:length(fitness)
+        fitness(i) = fitness(i)/sum;
+    end
+
+    parents = pickTopTwo(fitness,population);
+
+    %Sweet lovin'
+    nextGen = shuffleFunc(parents,10);
+    
+
+    chanceOfMut = randi(100,1,1);
+
+    if(chanceOfMut < 1)
+        nextGen = swap(nextGen,randi(length(nextGen),1,1),randi(length(nextGen),1,1));
+    end
+
+    population = nextGen;
+
+    %Mutate
+    for i = 1:popCount-1
+        chanceOfMut = randi(100,1,1);
+
+        if(chanceOfMut < 1)
+            nextGen = swap(nextGen,randi(length(nextGen),1,1),randi(length(nextGen),1,1));
+        end
+        population = [population; nextGen];
+    end
+    pause(0.001);
+    numberOfGenerations = numberOfGenerations +1;
+end
 
 
